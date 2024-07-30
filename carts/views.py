@@ -7,9 +7,9 @@ from store.models import Product, Variation
 
 def _cart_id(request):
     """
-    Get the cart by session_key present in the session
+    Получение корзины по ключу session_key, присутствующему в сессии
     :param request:
-    :return: cart by particular session key
+    :return: Содержание корзины по определенному ключу сессии
     """
     cart = request.session.session_key
     if not cart:
@@ -19,11 +19,11 @@ def _cart_id(request):
 
 def add_cart(request, product_id):
     """
-    Add the particular product to the cart by product id and variations (color, size, etc.)
-    if user is authenticated and not.
+    Добавляет конкретный товар в корзину по его идентификатору и вариациям (цвет, размер и т. д.)
+    если пользователь аутентифицирован и нет.
     :param request:
-    :param product_id: id of the product we want to add to the cart
-    :return: redirect user to 'cart' page
+    :param product_id: id товара, который мы хотим добавить в корзину
+    :return: перенаправление пользователя на страницу "Корзина".
     """
     current_user = request.user
     product = Product.objects.get(id=product_id)  # get the product
@@ -73,7 +73,7 @@ def add_cart(request, product_id):
             cart_item.save()
         return redirect('cart')
 
-    # If the user is not authenticated
+    # Если пользователь не прошел аутентификацию
     else:
         product_variation = []
         if request.method == 'POST':
@@ -89,7 +89,7 @@ def add_cart(request, product_id):
                     pass
 
         try:
-            cart = Cart.objects.get(cart_id=_cart_id(request))  # get the cart using the cart_id present in the session
+            cart = Cart.objects.get(cart_id=_cart_id(request))  # получаем корзину, используя cart_id в сессии
         except ObjectDoesNotExist:
             cart = Cart.objects.create(
                 cart_id=_cart_id(request)
@@ -130,11 +130,11 @@ def add_cart(request, product_id):
 
 def remove_cart(request, product_id, cart_item_id):
     """
-    Pressing the minus button decreases the quantity of product by one.
+    Нажатие кнопки "минус" уменьшает количество товара на единицу.
     :param cart_item_id:
     :param request:
     :param product_id:
-    :return: render cart page with new quantity
+    :return: Отображение страницы корзины с новым количеством товара
     """
     product = get_object_or_404(Product, id=product_id)
     try:
@@ -155,11 +155,11 @@ def remove_cart(request, product_id, cart_item_id):
 
 def remove_cart_item(request, product_id, cart_item_id):
     """
-    Pressing the remove button delete product from cart.
+   Нажатие кнопки удаления удаляет товар из корзины.
     :param cart_item_id:
     :param request:
     :param product_id:
-    :return: render cart page with new list of products
+    :return: Рендеринг страницы корзины с новым списком товаров
     """
     product = get_object_or_404(Product, id=product_id)
     if request.user.is_authenticated:
@@ -173,14 +173,14 @@ def remove_cart_item(request, product_id, cart_item_id):
 
 def cart_page(request, total=0, quantity=0, cart_items=None, discount=0, grand_total=0):
     """
-    This function render 'cart' page and calculate total sum, quantity, discount and grand total sum.
+    Эта функция выводит страницу 'Корзина' и вычисляет общую сумму, количество, скидку и общую сумму.
     :param request:
-    :param total: Sum without discount in present time
-    :param quantity: Product quantity in present time
-    :param cart_items: Products in cart
-    :param discount: Discount sum
-    :param grand_total: Amount including discount
-    :return: render 'cart' page
+    :param total: Сумма без скидки на текущий момент
+    :param quantity: Количество товара в текущий момент времени
+    :param cart_items: Товары в корзине
+    :param discount: Сумма скидки
+    :param grand_total: Сумма с учетом скидки
+    :return: Вывод страницы 'корзина'
     """
     try:
         if request.user.is_authenticated:

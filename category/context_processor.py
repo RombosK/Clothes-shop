@@ -4,10 +4,10 @@ from .models import Category
 
 def menu_links(request):
     """
-    Get links for all categories in database.
-    After that we can use this links in templates anywhere in the project.
+    Получаем ссылки для всех категорий в базе данных.
+    После этого мы можем использовать эти ссылки в шаблонах в любом месте проекта.
     :param request:
-    :return: dictionary of links
+    :return: словарь ссылок
     """
     links = Category.objects.all().order_by('category_name')
     count_products_by_category = [len(Product.objects.filter(category=link, is_available=True)) for link in links]

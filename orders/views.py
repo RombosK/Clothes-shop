@@ -7,13 +7,12 @@ from django.http import JsonResponse
 from django.shortcuts import render, redirect
 from django.template.loader import render_to_string
 from carts.models import CartItem
-from mensline import settings
+from config import settings
 from orders.forms import OrderForm
 from orders.models import Order, Payment, OrderProduct
 from yookassa import Configuration, Payment as PayKassa
 from store.models import Product
 from telebot.sendmessage import send_telegram
-
 
 order_number = None
 
@@ -176,7 +175,7 @@ def payments(request):
     CartItem.objects.filter(user=request.user).delete()
 
     # Send order received email to customer
-    mail_subject = 'Спасибо за Ваш заказ в MensLineStore!'
+    mail_subject = 'Спасибо за Ваш заказ в Mod!'
     message = render_to_string('orders/order_received_email.html', {
         'user': request.user,
         'order': order
@@ -200,7 +199,6 @@ def payments(request):
     }
 
     return JsonResponse(data)
-
 
 
 def order_complete(request):
