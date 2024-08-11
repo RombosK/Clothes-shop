@@ -97,7 +97,7 @@ def login(request):
             except:
                 pass
             auth.login(request, user)
-            messages.success(request, 'Вы вошли на сайт ModStore.')
+            messages.success(request, 'Вы вошли на сайт магазина "Модница".')
             url = request.META.get('HTTP_REFERER')
             try:
                 query = requests.utils.urlparse(url).query
