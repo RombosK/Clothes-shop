@@ -14,10 +14,10 @@ from pathlib import Path
 from django.contrib.messages import constants as messages
 from dotenv import load_dotenv
 
-load_dotenv()
-
+# load_dotenv()
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+load_dotenv(BASE_DIR / '.env')  # Load environment variables from.env file
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
@@ -26,10 +26,14 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.getenv('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.getenv('DEBUG', default=True)
+# DEBUG = os.getenv('DEBUG', default=True)
 
-ALLOWED_HOSTS = ['127.0.0.1', '*', 'localhost']
+# DEBUG = True
+DEBUG = True if os.getenv('DEBUG') == 'True' else False
 
+ALLOWED_HOSTS = ['*']
+
+ENV_TYPE = os.getenv('ENV_TYPE', 'prod')
 # Application definition
 
 INSTALLED_APPS = [
@@ -72,7 +76,7 @@ ROOT_URLCONF = 'config.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': ['templates'],
+        'DIRS': [BASE_DIR / 'templates/'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -113,13 +117,28 @@ AUTH_USER_MODEL = 'accounts.Account'
 #         }
 #     }
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
-}
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
+#     }
+# }
 
+if ENV_TYPE == 'local':
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',
+        }
+    }
+else:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql_psycopg2',
+            'NAME': 'shop',
+            'USER': 'postgres'
+        }
+    }
 # Password validation
 # https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators
 
@@ -154,15 +173,31 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
-STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'static')
-STATICFILES_DIRS = [
-    'config/static',
-]
+# STATIC_URL = '/static/'
+# STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+# STATICFILES_DIRS = [
+#     'config/static',
+# ]
+#
+# # media files configuration
+# MEDIA_URL = '/media/'
+# MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
-# media files configuration
+STATIC_URL = '/static/'
+
+# STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+if ENV_TYPE == 'local':
+    STATICFILES_DIRS = [
+        BASE_DIR / 'static',
+        ]
+else:
+    STATIC_ROOT = BASE_DIR / 'static'
+# STATICFILES_DIRS = [
+#     BASE_DIR / 'static',
+# ]
+
 MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_ROOT = BASE_DIR / 'media'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
@@ -172,7 +207,6 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 MESSAGE_TAGS = {
     messages.ERROR: 'danger',
 }
-
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.yandex.ru'
@@ -190,7 +224,12 @@ EMAIL_ADMIN = EMAIL_HOST_USER
 YOOKASSA_SECRET_KEY = os.getenv('YOOKASSA_SECRET_KEY')
 YOOKASSA_SHOP_ID = os.getenv('YOOKASSA_SHOP_ID')
 
-
+USE_THOUSAND_SEPARATOR = True
+USE_L10N = True
+USE_TZ = True
+USE_DJANGO_CRISPY_FORMS = True
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
+CRISPY_FAIL_SILENT_IF_NO_TEMPLATE = True
 
 # Email fo errors when DEBUG = False
 ADMINS = [('Modniza', 'rombikx@ya.ru')]
