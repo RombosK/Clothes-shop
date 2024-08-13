@@ -36,7 +36,7 @@ def place_order(request, total=0, quantity=0):
         discount = round(total * 0.03)
     else:
         discount = round(total * 0.07)
-    grand_total = total  - discount
+    grand_total = total - discount
 
     if request.method == 'POST':
         form = OrderForm(request.POST)
@@ -122,6 +122,107 @@ def yookassa_payment(request):
     except ObjectDoesNotExist:
         return redirect('yookassa_payment')
 
+
+# from django.http import JsonResponse
+# from django.core.mail import EmailMessage
+# from django.template.loader import render_to_string
+# from django.core.exceptions import ObjectDoesNotExist
+# import logging
+# import json
+#
+# logger = logging.getLogger(__name__)
+#
+# def payments(request):
+#     try:
+#         body = json.loads(request.body)
+#
+#         # Запрос текущего статуса платежа
+#         transaction_id = body['transID']
+#         payment_object = PayKassa.find_one(transaction_id)
+#         payment_data = json.loads(payment_object.json())
+#
+#         # Хранение деталей транзакций в модели платежей
+#         order = Order.objects.get(user=request.user, is_ordered=False, order_number=payment_data['metadata']['orderNumber'])
+#         payment = Payment(
+#             user=request.user,
+#             payment_id=payment_data['id'],
+#             payment_method=body['payment_method'],
+#             amount_paid=order.order_total,
+#             status=payment_data['status']
+#         )
+#         payment.save()
+#
+#         order.payment = payment
+#         order.is_ordered = True
+#         order.save()
+#
+#         # Перемещение элементов корзины в таблицу "Заказ товара"
+#         cart_items = CartItem.objects.filter(user=request.user)
+#
+#         for item in cart_items:
+#             orderproduct = OrderProduct()
+#             orderproduct.order_id = order.id
+#             orderproduct.payment = payment
+#             orderproduct.user_id = request.user.id
+#             orderproduct.product_id = item.product_id
+#             orderproduct.quantity = item.quantity
+#             orderproduct.product_price = item.product.price
+#             orderproduct.is_ordered = True
+#             orderproduct.save()
+#
+#             cart_item = CartItem.objects.get(id=item.id)
+#             product_variation = cart_item.variations.all()
+#             orderproduct = OrderProduct.objects.get(id=orderproduct.id)
+#             orderproduct.variations.set(product_variation)
+#             orderproduct.save()
+#
+#             # Уменьшение складского остатка товара в корзине
+#             product = Product.objects.get(id=item.product_id)
+#             product.stock -= item.quantity
+#             product.save()
+#
+#         # Очистка корзины
+#         CartItem.objects.filter(user=request.user).delete()
+#
+#         # Отправка заказчику электронного письма о получении заказа
+#         mail_subject = 'Спасибо за Ваш заказ в магазине "Модница"!'
+#         message = render_to_string('orders/order_received_email.html', {
+#             'user': request.user,
+#             'order': order
+#         })
+#         to_email = request.user.email
+#         send_email = EmailMessage(mail_subject, message, to=[to_email])
+#         send_email.send()
+#
+#         # Отправка сообщения в чат Telegram
+#         try:
+#             send_telegram(order_number=payment_data['metadata']['orderNumber'],
+#                           total_sum=order.order_total,
+#                           last_name=request.user.last_name,
+#                           first_name=request.user.first_name,
+#                           email=request.user.email,
+#                           phone_number=request.user.phone_number)
+#         except ObjectDoesNotExist:
+#             logger.error("Настройки Telegram не найдены")
+#             return JsonResponse({'error': 'Настройки Telegram не найдены'}, status=500)
+#
+#         # Отправка номера заказа и идентификатора транзакции обратно в метод sendData через JSONResponse
+#         data = {
+#             'order_number': payment_data['metadata']['orderNumber'],
+#             'transID': payment_data['id']
+#         }
+#
+#         return JsonResponse(data)
+#
+#     except KeyError as e:
+#         logger.error(f"Ошибка при обработке данных платежа: отсутствует ключ {e}")
+#         return JsonResponse({'error': 'Некорректные данные платежа'}, status=400)
+#     except Order.DoesNotExist:
+#         logger.error("Заказ не найден")
+#         return JsonResponse({'error': 'Заказ не найден'}, status=404)
+#     except Exception as e:
+#         logger.error(f"Произошла ошибка: {e}")
+#         return JsonResponse({'error': 'Внутренняя ошибка сервера'}, status=500)
 
 def payments(request):
     body = json.loads(request.body)

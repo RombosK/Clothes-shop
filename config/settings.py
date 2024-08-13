@@ -244,3 +244,26 @@ ADMINS = [('Modniza', 'rombikx@ya.ru')]
 #     ['rombos1978@gmail.com'],
 #     fail_silently=False,
 # )
+
+# Другие настройки Django...
+
+# Настройки логирования
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'file': {
+            'level': 'DEBUG',
+            'class': 'logging.FileHandler',
+            'filename': 'debug.log',
+        },
+    },
+    'loggers': {
+        'django': {
+            'handlers': ['file'],
+            'level': 'DEBUG',
+            'propagate': True,
+        },
+    },
+}
+
