@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% load static %}
 {% load get_index %}
-
+{% load pymorphy_tags %}
 {% block content %}
 
 <section class="section-pagetop bg">
@@ -83,8 +83,7 @@
 
                 <header class="border-bottom mb-4 pb-3">
                     <div class="form-inline">
-                        <span class="mr-md-auto"><b>{{ product_count }}</b> items found</span>
-
+                        <span class="mr-md-auto"><b>{{ product_count|format_product_count }}</b>.</span>
                     </div>
                 </header>
 

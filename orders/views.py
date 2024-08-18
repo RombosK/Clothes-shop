@@ -32,11 +32,16 @@ def place_order(request, total=0, quantity=0):
     for cart_item in cart_items:
         total += cart_item.product.price * cart_item.quantity
         quantity += cart_item.quantity
-    if total < 5000:
-        discount = round(total * 0.03)
-    else:
-        discount = round(total * 0.07)
-    grand_total = total - discount
+
+    # if total < 5000:
+    #     discount = total * 0.00
+    # elif total >= 5000 < 10000:
+    #     discount = round(total * 0.03)
+    # elif total >= 10000:
+    #     discount = round(total * 0.07)
+    # else:
+    #     discount = round(total * 0.07)
+        grand_total = total - discount
 
     if request.method == 'POST':
         form = OrderForm(request.POST)
