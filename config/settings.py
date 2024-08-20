@@ -32,7 +32,7 @@ SECRET_KEY = os.getenv('SECRET_KEY')
 DEBUG = True if os.getenv('DEBUG') == 'True' else False
 
 ALLOWED_HOSTS = ['*']
-
+# CSRF_TRUSTED_ORIGINS = ['https://shop-rombikx.amvera.io']
 ENV_TYPE = os.getenv('ENV_TYPE', 'prod')
 # Application definition
 
