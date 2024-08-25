@@ -78,8 +78,8 @@ class UserProfile(models.Model):
     objects = models.Manager()
 
     user = models.OneToOneField(Account, on_delete=models.CASCADE, verbose_name='Пользователь')
-    address_line_1 = models.CharField(blank=True, max_length=100, verbose_name='Адрес')
-    #address_line_2 = models.CharField(blank=True, max_length=100, verbose_name='Адрес 2')
+    address_line_1 = models.CharField(blank=True, max_length=100, verbose_name='Адрес 1')
+    address_line_2 = models.CharField(blank=True, max_length=100, verbose_name='Адрес 2')
     profile_picture = models.ImageField(blank=True, upload_to='userprofile', verbose_name='Фото профиля')
     city = models.CharField(blank=True, max_length=20, verbose_name='Город')
     region = models.CharField(blank=True, max_length=20, verbose_name='Регион')
@@ -89,7 +89,7 @@ class UserProfile(models.Model):
         return self.user.first_name
 
     def full_address(self):
-        return f'{self.address_line_1};'   # {self.address_line_2}
+        return f'{self.address_line_1}; {self.address_line_2}'
 
     class Meta:
         verbose_name = 'Профиль пользователя'

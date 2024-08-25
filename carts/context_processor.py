@@ -5,9 +5,9 @@ from .models import Cart, CartItem
 
 def counter(request):
     """
-    Подсчитывает количество товаров в корзине.
+    Count quantity of products in the cart.
     :param request:
-    :return: Возвращает словарь с количеством товаров в корзине.
+    :return: Count quantity of products in the cart.
     """
     cart_count = 0
     if 'admin' in request.path:

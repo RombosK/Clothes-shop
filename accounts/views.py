@@ -32,15 +32,15 @@ def register(request):
             user.phone_number = phone_number
             user.save()
 
-            # Создаём пользователя и его профиль
+            # CREATE USER PROFILE
             profile = UserProfile()
             profile.user_id = user.id
             profile.profile_picture = 'default/default-user.png'
             profile.save()
 
-            # Активавим пользователя в системе.
+            # USER ACTIVATION
             current_site = get_current_site(request)
-            mail_subject = 'Активируйте свой аккаунт'
+            mail_subject = 'Активируйте свой аккаунт в MensLine'
             message = render_to_string('accounts/account_verification_email.html', {
                 'user': user,
                 'domain': current_site,
@@ -73,10 +73,10 @@ def login(request):
                 if is_cart_item_exists:
                     cart_item = CartItem.objects.filter(cart=cart)
 
-                    # Получение вариации продукта по идентификатору корзины
+                    # Getting the product variation by cart id
                     product_variation = [list(item.variations.all()) for item in cart_item]
 
-                    # Получениеот пользователя элементы корзины, чтобы получить доступ к вариациям его продуктов
+                    # Get the cart items from the user to access his product variation
                     cart_item = CartItem.objects.filter(user=user)
                     existing_variation_list = [list(item.variations.all()) for item in cart_item]
                     item_id_list = [item.id for item in cart_item]
@@ -97,7 +97,7 @@ def login(request):
             except:
                 pass
             auth.login(request, user)
-            messages.success(request, 'Вы вошли на сайт магазина "Модница".')
+            messages.success(request, 'Вы вошли на сайт.')
             url = request.META.get('HTTP_REFERER')
             try:
                 query = requests.utils.urlparse(url).query

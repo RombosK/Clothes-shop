@@ -6,19 +6,20 @@
 <section class="section-intro padding-y-sm">
     <div class="container">
         <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
-                        <ol class="carousel-indicators">
-                            {% for slide in slider_list %}
-                            <li data-target="#carouselExampleIndicators" data-slide-to="{{slide.id}}" class="{{slide.slider_css}}"></li>
-                            {% endfor %}
-                        </ol>
+            <!--            <ol class="carousel-indicators">-->
+            <!--                {% for slide in slider_list %}-->
+            <!--                <li data-target="#carouselExampleIndicators" data-slide-to="{{slide.id}}" class="{{slide.slider_css}}"></li>-->
+            <!--                {% endfor %}-->
+            <!--            </ol>-->
             <div class="carousel-inner img-fluid rounded">
                 {% for slide in slider_list %}
                 <div class="carousel-item {{slide.slider_css}}">
                     <img class="d-block w-100" src="{{slide.slider_image.url}}" alt="{{slide.slider_title}}">
-                                        <div class="carousel-caption d-none d-md-block">
-                                            <h5>{{slide.slider_title}}</h5>
-                                            <p>{{slide.slider_text}}</p>
-                                        </div>
+                    <!--                    <div class="carousel-caption d-none d-md-block">-->
+                    <!--                        <h5>{{slide.slider_title}}</h5>-->
+                    <!--                        <p>{{slide.slider_text}}</p>-->
+                    <!--                    </div>-->
+                </div>
                 {% endfor %}
             </div>
             <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
