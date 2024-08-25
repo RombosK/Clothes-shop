@@ -7,7 +7,7 @@ from django.http import JsonResponse
 from django.shortcuts import render, redirect
 from django.template.loader import render_to_string
 from carts.models import CartItem
-from mensline import settings
+from config import settings
 from orders.forms import OrderForm
 from orders.models import Order, Payment, OrderProduct
 from yookassa import Configuration, Payment as PayKassa
