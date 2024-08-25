@@ -164,6 +164,10 @@ MESSAGE_TAGS = {
     messages.ERROR: 'danger',
 }
 
+USE_THOUSAND_SEPARATOR = True
+
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
+
 # SMTP configuration
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'  # default
 EMAIL_HOST = config('EMAIL_HOST')
