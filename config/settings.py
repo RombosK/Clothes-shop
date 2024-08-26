@@ -96,11 +96,11 @@ if 'POSTGRES_DB' in os.environ:
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.postgresql',
-            'HOST': config('POSTGRES_HOST', 'localhost'),
+            #'HOST': config('POSTGRES_HOST', 'localhost'),
             'NAME': config('POSTGRES_DB', 'db_name'),
             'USER': config('POSTGRES_USER', 'username'),
             'PASSWORD': config('POSTGRES_PASSWORD', 'password'),
-            'PORT': config('POSTGRES_PORT', '5432'),
+            #'PORT': config('POSTGRES_PORT', '5432'),
         }
     }
 else:
