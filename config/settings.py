@@ -96,11 +96,11 @@ if 'POSTGRES_DB' in os.environ:
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.postgresql',
-            #'HOST': config('POSTGRES_HOST', 'localhost'),
+            'HOST': config('POSTGRES_HOST', 'localhost'),
             'NAME': config('POSTGRES_DB', 'db_name'),
             'USER': config('POSTGRES_USER', 'username'),
             'PASSWORD': config('POSTGRES_PASSWORD', 'password'),
-            #'PORT': config('POSTGRES_PORT', '5432'),
+            'PORT': config('POSTGRES_PORT', '5432'),
         }
     }
 else:
@@ -132,7 +132,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/4.1/topics/i18n/
 
-LANGUAGE_CODE = 'ru-RU'
+LANGUAGE_CODE = 'ru-ru'
 
 TIME_ZONE = 'Europe/Moscow'
 
@@ -146,11 +146,18 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
 STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'static')
-STATICFILES_DIRS = [
-    'config/static',
-]
 
+# STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+# STATICFILES_DIRS = [
+#     'static',
+# ]
+ENV_TYPE = os.getenv('ENV_TYPE', 'local')  # local or prod
+if ENV_TYPE == 'local':
+    STATICFILES_DIRS = [
+        BASE_DIR / 'static',
+    ]
+else:
+    STATIC_ROOT = BASE_DIR / 'static'
 # media files configuration
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
