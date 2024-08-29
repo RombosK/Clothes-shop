@@ -40,7 +40,7 @@ def register(request):
 
             # USER ACTIVATION
             current_site = get_current_site(request)
-            mail_subject = 'Активируйте свой аккаунт в MensLine'
+            mail_subject = 'Активируйте свой аккаунт в ModStore'
             message = render_to_string('accounts/account_verification_email.html', {
                 'user': user,
                 'domain': current_site,
