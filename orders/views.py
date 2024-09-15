@@ -50,8 +50,8 @@ def place_order(request, total=0, quantity=0):
             data.phone = form.cleaned_data['phone']
             data.email = form.cleaned_data['email']
             data.address_line_1 = form.cleaned_data['address_line_1']
-            data.address_line_2 = form.cleaned_data['address_line_2']
-            data.country = form.cleaned_data['country']
+            # data.address_line_2 = form.cleaned_data['address_line_2']
+            # data.country = form.cleaned_data['country']
             data.region = form.cleaned_data['region']
             data.city = form.cleaned_data['city']
             data.order_note = form.cleaned_data['order_note']
@@ -176,7 +176,7 @@ def payments(request):
     CartItem.objects.filter(user=request.user).delete()
 
     # Send order received email to customer
-    mail_subject = 'Спасибо за Ваш заказ в MensLineStore!'
+    mail_subject = 'Спасибо за Ваш заказ в ModStore!'
     message = render_to_string('orders/order_received_email.html', {
         'user': request.user,
         'order': order

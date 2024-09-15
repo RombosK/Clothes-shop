@@ -21,7 +21,7 @@ class UserProfileAdmin(admin.ModelAdmin):
     def thumbnail(self, obj):
         return format_html('<img src="{}" width="30" style="border-radius:50%;">'.format(obj.profile_picture.url))
     thumbnail.short_description = 'Фото профиля'
-    list_display = ('thumbnail', 'user', 'city', 'region', 'country')
+    list_display = ('thumbnail', 'user', 'city', 'region')
     list_display_links = ('user', 'thumbnail')
     list_per_page = 20
     list_max_show_all = 100

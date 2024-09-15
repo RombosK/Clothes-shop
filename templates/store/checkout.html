@@ -26,36 +26,41 @@
                             <div class="form-row">
                                 <div class="col form-group">
                                     <label for="">Электронная почта</label>
-                                    <input type="email" name="email" class="form-control" required>
+                                    <input type="email" name="email" class="form-control" placeholder="example@mail.com"
+                                           required>
                                 </div>
                                 <div class="col form-group">
                                     <label for="">Телефонный номер</label>
-                                    <input type="text" name="phone" class="form-control" required>
+                                    <input type="text" name="phone" class="form-control"
+                                           placeholder="+7 (999) 999-99-99" required>
                                 </div>
                             </div>
                             <div class="form-row">
                                 <div class="col form-group">
                                     <label for="">Адрес доставки</label>
-                                    <input type="text" name="address_line_1" class="form-control" required>
+                                    <input type="text" name="address_line_1" class="form-control"
+                                           placeholder="Улица, дом, квартира" required>
                                 </div>
 <!--                                <div class="col form-group">-->
 <!--                                    <label for="">Адрес 2</label>-->
-<!--                                    <input type="text" name="address_line_2" class="form-control" >-->
+<!--                                    <input type="text" name="address_line_2" class="form-control" placeholder="Необязательное поле">-->
 <!--                                </div>-->
                             </div>
                             <div class="form-row">
                                 <div class="col form-group">
                                     <label for="">Город</label>
-                                    <input type="text" name="city" class="form-control" required>
+                                    <input type="text" name="city" class="form-control"
+                                           placeholder="Введите название города" required>
                                 </div>
                                 <div class="col form-group">
                                     <label for="">Регион</label>
-                                    <input type="text" name="region" class="form-control" required>
+                                    <input type="text" name="region" class="form-control" placeholder="Область, регион"
+                                           required>
                                 </div>
-                                <div class="col form-group">
-                                    <label for="">Страна</label>
-                                    <input type="text" name="country" class="form-control" required>
-                                </div>
+<!--                                <div class="col form-group">-->
+<!--                                    <label for="">Страна</label>-->
+<!--                                    <input type="text" name="country" class="form-control" placeholder="Россия">-->
+<!--                                </div>-->
                             </div>
                             <div class="form-row">
                                 <label for="">Примечание к заказу</label>
@@ -91,7 +96,8 @@
                                             <p class="text-muted small">
                                                 {% if cart_item.variations.all %}
                                                 {% for item in cart_item.variations.all %}
-                                                {{ item.variation_category | capfirst }} : {{ item.variation_value | capfirst }} <br>
+                                                {{ item.variation_category | capfirst }} : {{ item.variation_value |
+                                                capfirst }} <br>
                                                 {% endfor %}
                                                 {% endif %}
                                             </p>

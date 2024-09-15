@@ -44,11 +44,12 @@ class UserForm(forms.ModelForm):
 
 
 class UserProfileForm(forms.ModelForm):
-    profile_picture = forms.ImageField(required=False, error_messages={'invalid': 'Только файлы изображений.'}, widget=forms.FileInput)
+    profile_picture = forms.ImageField(required=False, error_messages={'invalid': 'Только файлы изображений.'},
+                                       widget=forms.FileInput)
 
     class Meta:
         model = UserProfile
-        fields = ('address_line_1', 'address_line_2', 'profile_picture', 'city', 'region', 'country')
+        fields = ('address_line_1', 'profile_picture', 'city', 'region')
 
     def __init__(self, *args, **kwargs):
         super(UserProfileForm, self).__init__(*args, **kwargs)

@@ -24,10 +24,10 @@ class Payment(models.Model):
 
 class Order(models.Model):
     STATUS = (
-        ('New', 'New'),
-        ('Accepted', 'Accepted'),
-        ('Completed', 'Completed'),
-        ('Cancelled', 'Cancelled'),
+        ('Новый', 'Новый'),
+        ('Принят', 'Принят'),
+        ('Завершён', 'Завершён'),
+        ('Отменён', 'Отменён'),
     )
     objects = models.Manager()
 
@@ -39,8 +39,8 @@ class Order(models.Model):
     phone = models.CharField(max_length=15, verbose_name='Телефон')
     email = models.EmailField(max_length=50, verbose_name='Электронный адрес')
     address_line_1 = models.CharField(max_length=50, verbose_name='Адрес 1')
-    address_line_2 = models.CharField(max_length=50, blank=True, verbose_name='Адрес 2')
-    country = models.CharField(max_length=50, verbose_name='Страна')
+    address_line_2 = models.CharField(max_length=50, verbose_name='Адрес 2', blank=True, default='')
+    country = models.CharField(max_length=50, verbose_name='Страна', blank=True, default='')
     region = models.CharField(max_length=50, verbose_name='Регион')
     city = models.CharField(max_length=50, verbose_name='Город')
     order_note = models.CharField(max_length=100, blank=True, verbose_name='Примечание к заказу')
