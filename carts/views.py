@@ -191,10 +191,10 @@ def cart_page(request, total=0, quantity=0, cart_items=None, discount=0, grand_t
         for cart_item in cart_items:
             total += cart_item.product.price * cart_item.quantity
             quantity += cart_item.quantity
-        if total < 5000:
-            discount = round(total * 0.03)
-        else:
-            discount = round(total * 0.07)
+        # if total < 5000:
+        #     discount = round(total * 0.03)
+        # else:
+        #     discount = round(total * 0.07)
         grand_total = total - discount
     except ObjectDoesNotExist:
         pass
@@ -221,10 +221,10 @@ def checkout(request, total=0, quantity=0, cart_items=None, discount=0, grand_to
         for cart_item in cart_items:
             total += cart_item.product.price * cart_item.quantity
             quantity += cart_item.quantity
-        if total < 5000:
-            discount = round(total * 0.03)
-        else:
-            discount = round(total * 0.07)
+        # if total < 5000:
+        #     discount = round(total * 0.03)
+        # else:
+        #     discount = round(total * 0.07)
         grand_total = total - discount
     except ObjectDoesNotExist:
         pass
